@@ -3,8 +3,10 @@ module Pardot
 
     def get object, path, params = {}, num_retries = 0
       smooth_params object, params
+      headers = auth_headers(object)
+      # auth_headers authenticates, which gets us the correct API version, which we use below
       full_path = fullpath object, path
-      check_response self.class.get(full_path, :query => params, :headers => auth_headers(object))
+      check_response self.class.get(full_path, :query => params, :headers => headers)
 
     rescue Pardot::ExpiredApiKeyError => e
       handle_expired_api_key :get, object, path, params, num_retries, e
@@ -15,8 +17,10 @@ module Pardot
 
     def post object, path, params = {}, num_retries = 0
       smooth_params object, params
+      headers = auth_headers(object)
+      # auth_headers authenticates, which gets us the correct API version, which we use below
       full_path = fullpath object, path
-      check_response self.class.post(full_path, :query => params, :headers => auth_headers(object))
+      check_response self.class.post(full_path, :query => params, :headers => headers)
 
     rescue Pardot::ExpiredApiKeyError => e
       handle_expired_api_key :post, object, path, params, num_retries, e
