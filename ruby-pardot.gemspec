@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rspec"
   s.add_development_dependency "fakeweb"
 
-  s.files        = `git ls-files`.split("\n")
-  s.executables  = `git ls-files`.split("\n").map{|f| f =~ /^bin\/(.*)/ ? $1 : nil}.compact
+  s.files        = Dir['lib/**/*.rb'] + Dir['bin/*']
+  s.executables  = s.files.grep(%r{^bin/}).map { |f| File.basename(f) }
   s.require_path = 'lib'
 end
